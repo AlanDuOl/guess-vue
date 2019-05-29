@@ -1,22 +1,36 @@
 <template>
   <div id="app">
-    <h5>Nível</h5>
+    <h5>Nivel</h5>
     <div id="lvl-btns-container">
-      <button class="lvl-btn">1</button>
-      <button class="lvl-btn">2</button>
-      <button class="lvl-btn">3</button>
+      <button class="lvl-btn" value="16" v-on:click="changeLvl">Nivel 1</button>
+      <button class="lvl-btn" value="25" @click="changeLvl">Nivel 2</button>
+      <button class="lvl-btn" value="36" @click="changeLvl">Nivel 3</button>
     </div>
-    <Board />
+    <Board :numTiles="numTiles" />
   </div>
 </template>
 
 <script>
 import Board from './components/Board'
 export default {
+
   name: 'app',
+  
   components: {
     Board
+  },
+  
+  data: () => {
+	return {
+		numTiles: '16'
+	}
+  },
+  methods: {
+	changeLvl(event) {
+		this.numTiles = event.target.value
+	}
   }
+  
 }
 </script>
 

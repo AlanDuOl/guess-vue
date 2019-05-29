@@ -1,7 +1,8 @@
 <template>
     <div id="board-container">
-        <tile v-for="(item, index) in imgTiles" :key="index" :item="item">
+        <tile v-for="(value, key) in images" :key="key" :url="value">
         </tile>
+		{{numTiles}}
     </div>
 </template>
 
@@ -9,15 +10,31 @@
 import Tile from './Tile'
 export default {
     name: 'board',
-    data: () => {
-        return {
-            numTiles: 8,
-            imgTiles: [1,1,1,1,1,1,1,1]
-        }
-    },
     components: {
         'tile': Tile
-    }
+    },
+	props: {
+		numTiles: String
+	},
+	data: () => {
+		return {
+			images: { red: '@/assets/imgs/red.png',
+				green: '@/assets/imgs/green.png',
+				blue: '@/assets/imgs/blue.png',
+				brown: '@/assets/imgs/brown.png',
+				gray: '@/assets/imgs/gray.png',
+				orange: '@/assets/imgs/orange.png'
+			},
+			tiles: []
+		}
+	},
+	methods: {
+		shuffleTiles(){
+			if(this.tiles.lenght < this.numTiles+1){
+				
+			}
+		}
+	}
 }
 </script>
 
