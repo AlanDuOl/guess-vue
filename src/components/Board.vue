@@ -2,7 +2,7 @@
     <div id="board-container">
         <tile v-for="(value, key) in images" :key="key" :url="value">
         </tile>
-		{{numTiles}}
+		{{this.paths}}
     </div>
 </template>
 
@@ -14,25 +14,32 @@ export default {
         'tile': Tile
     },
 	props: {
+		paths: Array,
 		numTiles: String
 	},
 	data: () => {
 		return {
-			images: { red: '@/assets/imgs/red.png',
-				green: '@/assets/imgs/green.png',
-				blue: '@/assets/imgs/blue.png',
-				brown: '@/assets/imgs/brown.png',
-				gray: '@/assets/imgs/gray.png',
-				orange: '@/assets/imgs/orange.png'
-			},
-			tiles: []
+			tilePaths: []
 		}
 	},
 	methods: {
 		shuffleTiles(){
-			if(this.tiles.lenght < this.numTiles+1){
-				
+			let images = this.paths
+			const finalPaths = new Array(images.length * 2)
+			let cIndex = 0
+			while(images.length > 0){
+				let index = Math.floor(Math.random() * images.length)
+				if(this.numTiles.includes(images[index])){
+					finalPaths[cIndex] = images[index]
+					images.splice(index,1)
+					cIndex++
+				}
+				else {
+					this.tilePaths[cIndex] = images[index]
+					cIndex++
+				}
 			}
+			this.tilePaths = finalPaths
 		}
 	}
 }
