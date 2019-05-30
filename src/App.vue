@@ -6,7 +6,7 @@
       <button class="lvl-btn" :value="levels.lvl2" @click="changeLvl">Nivel 2</button>
       <button class="lvl-btn" :value="levels.lvl3" @click="changeLvl">Nivel 3</button>
     </div>
-    <Board :paths="finalPaths" :numTiles="numTiles"/>
+    <Board :paths="images" />
   </div>
 </template>
 
@@ -23,14 +23,8 @@ export default {
   
   data: () => {
     return {
-      numTiles: '8',
-      paths: ['@/assets/imgs/red.png', '@/assets/imgs/green.png',
-				'@/assets/imgs/blue.png', '@/assets/imgs/brown.png',
-				'@/assets/imgs/gray.png', '@/assets/imgs/orange.png'
-      ],
-      finalPaths: ['@/assets/imgs/red.png', '@/assets/imgs/green.png',
-        '@/assets/imgs/blue.png', '@/assets/imgs/brown.png'
-      ],
+      currentLvl: '8',
+      images: [],
       levels: {
         lvl1: '8',
         lvl2: '10',
@@ -42,25 +36,44 @@ export default {
   methods: {
 
     changeLvl(event) {
-      this.numTiles = event.target.value
-      this.setPaths(this.numTiles)
+      this.currentLvl = event.target.value
+      this.setImages(this.currentLvl)
     },
+	
+	setRandomColors(currentLvl){
+		let images = []
+		while(images.length < currentLvl/2){
+			let color = {
+				red: Math.floor(Math.random() * 255),
+				green: Math.floor(Math.random() * 255),
+				blue: Math.floor(Math.random() * 255)
+			}
+			if(!images.includes(color)){
+				images.push(color)
+			}
+		}
+		this.images = images
+	},
 
-    setPaths(numTiles){
-      if(numTiles === this.levels.lvl1){
-        this.finalPaths = this.paths.slice(0,4)
+    setImages(currentLvl){
+      if(currentLvl === this.levels.lvl1){
+		this.setRandomColors(currentLvl)
       }
-      else if(numTiles === this.levels.lvl2){
-        this.finalPaths = this.paths.slice(0,5)
+      else if(currentLvl === this.levels.lvl2){
+        this.setRandomColors(currentLvl)
       }
-      else if(numTiles === this.levels.lvl3){
-        this.finalPaths = this.paths.slice(0,6)
+      else if(currentLvl === this.levels.lvl3){
+        this.setRandomColors(currentLvl)
       }
       else {
-        throw 'Unknow value for numTiles'
+        throw 'Unknow value for currentLvl'
       }
     }
 
+  },
+  
+  mounted(){
+	this.setImages(this.currentLvl)
   }
   
 }
