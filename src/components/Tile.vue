@@ -27,8 +27,8 @@ export default {
 <style>
 
     .board-tiles {
-        width: 100px;
-        height: 100px;
+        min-width: 80px;
+        min-height: 80px;
     }
 	
 	.board-tiles:hover {

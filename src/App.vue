@@ -6,7 +6,7 @@
       <button class="lvl-btn" :value="levels.lvl2" @click="changeLvl">Nivel 2</button>
       <button class="lvl-btn" :value="levels.lvl3" @click="changeLvl">Nivel 3</button>
     </div>
-    <Board :paths="finalImages" />
+    <Board :paths="finalImages" :level="currentLvl" />
   </div>
 </template>
 
@@ -90,7 +90,6 @@ export default {
 			}
 			this.finalImages = finalImages
 		}
-
 	},
 
 	mounted(){
