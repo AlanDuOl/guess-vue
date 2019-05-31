@@ -1,5 +1,5 @@
 <template>
-    <div class="board-tiles" :src="image"></div>
+    <div class="board-tiles" :src="image" @click="toggleActivity"></div>
 </template>
 
 <script>
@@ -8,6 +8,18 @@ export default {
 	name: 'tile',
 	props: {
 		image: Image
+	},
+	data: function(){
+		return {
+			state: {
+				active: false
+			}
+		}
+	},
+	methods: {
+		toggleActivity: function(){
+			this.state.active = !this.state.active
+		}
 	}
 }
 </script>
@@ -15,8 +27,12 @@ export default {
 <style>
 
     .board-tiles {
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
     }
+	
+	.board-tiles:hover {
+		box-shadow: 4px 4px gray;
+	}
 
 </style>

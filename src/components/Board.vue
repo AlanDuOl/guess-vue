@@ -1,6 +1,6 @@
 <template>
     <div id="board-container">
-        <tile v-for="(value, index) in tileImages" :key="index" :image="value">
+        <tile v-for="(value, index) in paths" :key="index" :style="'background-color'+':'+ 'rgb('+value.red+','+ value.green+','+ value.blue+')'">
         </tile>
     </div>
 </template>
@@ -14,35 +14,6 @@ export default {
     },
 	props: {
 		paths: Array
-	},
-	data: () => {
-		return {
-			tileImages: []
-		}
-	},
-	methods: {
-		shuffleTiles(){
-			let images = this.paths
-			const finalImages = new Array(images.length * 2)
-			let cIndex = 0
-			while(images.length > 0){
-				let index = Math.floor(Math.random() * images.length)
-				if(finalImages.includes(images[index])){
-					finalImages[cIndex] = images[index]
-					images.splice(index,1)
-					cIndex++
-				}
-				else {
-					finalImages[cIndex] = images[index]
-					cIndex++
-				}
-			}
-			this.tileImages = finalImages
-			console.log(images)
-		}
-	},
-	mounted() {
-		this.shuffleTiles()
 	}
 }
 </script>
@@ -51,6 +22,7 @@ export default {
 
     #board-container {
         display: flex;
+		flex-wrap: wrap;
 		justify-content: space-around;
         width: 500px;
         height: 500px;
