@@ -1,6 +1,6 @@
 <template>
     <div :id="grid[level]">
-        <tile v-for="(value, index) in paths" :key="index" :style="'background-color'+':'+ 'rgb('+value.red+','+ value.green+','+ value.blue+')'">
+        <tile v-for="(value, index) in paths" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
         </tile>
     </div>
 </template>

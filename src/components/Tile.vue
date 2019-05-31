@@ -1,5 +1,5 @@
 <template>
-    <div class="board-tiles" :src="image" @click="toggleActivity"></div>
+    <div class="board-tiles" @click="toggleActivity" :style="state.active ? 'background-color: rgb('+bgColor+')': ''"></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@
 export default {
 	name: 'tile',
 	props: {
-		image: Image
+		bgColor: String
 	},
 	data: function(){
 		return {
@@ -18,7 +18,7 @@ export default {
 	},
 	methods: {
 		toggleActivity: function(){
-			this.state.active = !this.state.active
+			this.state.active = true
 		}
 	}
 }
@@ -29,6 +29,7 @@ export default {
     .board-tiles {
         min-width: 80px;
         min-height: 80px;
+		background-color: black;
     }
 	
 	.board-tiles:hover {
