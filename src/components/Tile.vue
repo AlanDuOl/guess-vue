@@ -1,5 +1,6 @@
 <template>
-    <div class="board-tiles" @click="toggleActivity" :style="state.active ? 'background-color: rgb('+bgColor+')': ''"></div>
+    <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0)'">
+	</div>
 </template>
 
 <script>
@@ -7,19 +8,44 @@
 export default {
 	name: 'tile',
 	props: {
-		bgColor: String
+		bgColor: String,
 	},
-	data: function(){
+	data(){
 		return {
 			state: {
 				active: false
 			}
 		}
 	},
-	methods: {
-		toggleActivity: function(){
-			this.state.active = true
+
+	computed: {
+		update(){
+
 		}
+	},
+
+	watch: {
+		level(){
+			this.setInactive()
+			console.log('watch')
+		}
+	},
+
+	methods: {
+		setActive(event){
+			if(this.$store.state.activeTiles.length < 2){
+				if(this.state.active) return
+				this.state.active = true
+				this.$store.commit('play', event.target.outerHTML)
+			}
+		},
+		setInactive(){
+			this.state.active = false
+		}
+	},
+
+	mounted(){
+		this.setInactive()
 	}
 }
 </script>
@@ -29,7 +55,6 @@ export default {
     .board-tiles {
         min-width: 80px;
         min-height: 80px;
-		background-color: black;
     }
 	
 	.board-tiles:hover {
