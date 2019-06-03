@@ -26,13 +26,12 @@ export default {
 		return {
 			levels
 		}
-  },
+	},
 
 	methods: {
 
 		changeLvl(event) {
-      this.$store.commit('setLevel', event.target.value)
-      this.$store.commit('resetElements')
+			this.$store.commit('setLevel', event.target.value)
 		}
 
 	}

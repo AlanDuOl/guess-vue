@@ -1,16 +1,21 @@
 <template>
     <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0);'">
+	{{hasChange}}
 	</div>
 </template>
 
 <script>
 
 export default {
+
 	name: 'tile',
+	
 	props: {
 		bgColor: String,
-		level: String
+		level: String,
+		hasChange: Boolean
 	},
+	
 	data(){
 		return {
 			state: {
@@ -18,37 +23,43 @@ export default {
 			}
 		}
 	},
+	
+	computed: {
+		resetLevels(){
+			return this.$store.state.reloadSameLevel
+		}
+	},
 
 	watch: {
 		level(){
+			//Reset on level change
 			this.setInactive()
 			this.$store.commit('resetElements')
 		},
 		resetLevels(){
+			//Reset same level after first play (numPlays bigger than zero
+			console.log('reset')
 			this.setInactive()
 		}
-
 	},
 
 	methods: {
 		setActive(event){
 			if(this.$store.state.activeTiles.length < 2){
 				if(this.state.active) return
-				this.state.active = true
 				this.$store.commit('play', event.target.outerHTML)
-			} else {
-				console.log('jumped here')
+				this.state.active = true
 			}
-
 		},
 		setInactive(){
 			this.state.active = false
 		}
 	},
 
-	created(){
+	mounted(){
 		this.setInactive()
 	}
+	
 }
 </script>
 
