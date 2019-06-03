@@ -1,6 +1,6 @@
 <template>
     <div :id="grid[currentLvl]">
-        <tile :level="currentLvl" v-for="(value, index) in finalImages" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
+        <tile :resetLevels="reset" :level="currentLvl" v-for="(value, index) in finalImages" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
         </tile>
     </div>
 </template>
@@ -15,7 +15,11 @@ export default {
 
     components: {
         'tile': Tile
-    },
+	},
+	
+	props: {
+		reset: Array
+	},
 
 	data() {
 		return {

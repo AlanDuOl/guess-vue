@@ -2,7 +2,7 @@
   <div id="app">
     <h5>Nivel</h5>
     <div id="lvl-btns-container">
-      <button class="lvl-btn" :value="levels.lvl1" v-on:click="changeLvl">Nivel 1</button>
+      <button class="lvl-btn" :value="levels.lvl1" @click="changeLvl">Nivel 1</button>
       <button class="lvl-btn" :value="levels.lvl2" @click="changeLvl">Nivel 2</button>
       <button class="lvl-btn" :value="levels.lvl3" @click="changeLvl">Nivel 3</button>
     </div>
@@ -26,12 +26,13 @@ export default {
 		return {
 			levels
 		}
-	},
+  },
 
 	methods: {
 
 		changeLvl(event) {
-			this.$store.commit('setLevel', event.target.value)
+      this.$store.commit('setLevel', event.target.value)
+      this.$store.commit('resetElements')
 		}
 
 	}

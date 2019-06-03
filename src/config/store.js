@@ -16,12 +16,16 @@ export default new Vuex.Store({
 	mutations: {
 		setLevel(state, value){
 			state.currentLevel = value
+			state.activeTiles = []
 		},
 		reload(state, value){
 			state.reload = value
 		},
 		play(state, value){
 			state.activeTiles.push(value)
+		},
+		resetElements(state){
+			state.activeTiles = []
 		},
 		disableTiles(state, value){
 			state.disableTiles = value

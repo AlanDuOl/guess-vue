@@ -1,5 +1,5 @@
 <template>
-    <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0)'">
+    <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0);'">
 	</div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
 	name: 'tile',
 	props: {
 		bgColor: String,
+		level: String
 	},
 	data(){
 		return {
@@ -18,17 +19,15 @@ export default {
 		}
 	},
 
-	computed: {
-		update(){
-
-		}
-	},
-
 	watch: {
 		level(){
 			this.setInactive()
-			console.log('watch')
+			this.$store.commit('resetElements')
+		},
+		resetLevels(){
+			this.setInactive()
 		}
+
 	},
 
 	methods: {
@@ -37,14 +36,17 @@ export default {
 				if(this.state.active) return
 				this.state.active = true
 				this.$store.commit('play', event.target.outerHTML)
+			} else {
+				console.log('jumped here')
 			}
+
 		},
 		setInactive(){
 			this.state.active = false
 		}
 	},
 
-	mounted(){
+	created(){
 		this.setInactive()
 	}
 }
