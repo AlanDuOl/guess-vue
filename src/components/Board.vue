@@ -1,6 +1,6 @@
 <template>
     <div :id="grid[currentLvl]">
-        <tile :level="currentLvl" v-for="(value, index) in finalImages" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
+        <tile :checkMatch="checkMatch" :level="currentLvl" v-for="(value, index) in finalImages" :id="'tile-'+index" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
         </tile>
     </div>
 </template>
@@ -34,7 +34,10 @@ export default {
         },
         finalImages(){
             return this.setImages(this.$store.state.currentLevel)
-        }
+        },
+		checkMatch(){
+			return this.$store.state.checkMatch
+		}
     },
     
     methods: {

@@ -1,6 +1,5 @@
 <template>
     <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0);'">
-	{{hasChange}}
 	</div>
 </template>
 
@@ -12,47 +11,56 @@ export default {
 	
 	props: {
 		bgColor: String,
-		level: String,
-		hasChange: Boolean
+		level: String
 	},
 	
 	data(){
 		return {
 			state: {
-				active: false
+				active: false,
+				canChange: true
 			}
 		}
 	},
 	
 	computed: {
 		resetLevels(){
-			return this.$store.state.reloadSameLevel
+			return this.$store.state.reloadTiles
 		}
 	},
 
 	watch: {
-		level(){
-			//Reset on level change
+		resetLevels(){
+			//Reset same level after first play (numPlays bigger than zero
 			this.setInactive()
 			this.$store.commit('resetElements')
 		},
-		resetLevels(){
-			//Reset same level after first play (numPlays bigger than zero
-			console.log('reset')
-			this.setInactive()
+		checkMatch(){
+			if(this.$store.state.activeTiles[0] === this.$store.state.activeTiles[1]){
+				if(this.state.active) this.state.canChange = false
+			}
 		}
 	},
 
 	methods: {
 		setActive(event){
 			if(this.$store.state.activeTiles.length < 2){
-				if(this.state.active) return
-				this.$store.commit('play', event.target.outerHTML)
-				this.state.active = true
+				//If tile is already active do nothing
+				if(this.state.active){
+					return
+				}
+				//If tile can be changed set it to active and add it to activeTiles
+				else {
+					this.state.active = true
+					this.$store.commit('play', event.target.outerHTML)
+				}
+			}
+			else {
+				throw 'Unkonw length for activeTiles'
 			}
 		},
 		setInactive(){
-			this.state.active = false
+			if(this.state.canChange) this.state.active = false
 		}
 	},
 

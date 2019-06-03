@@ -8,20 +8,18 @@ export default new Vuex.Store({
 
 	state: {
 		currentLevel: levels.lvl1,
-		reloadSameLevel: 0,
+		reloadTiles: 0,
 		numPlays: 0,
 		activeTiles: [],
-		hasChange: false
+		checkMatch: 0
 	},
 
 	mutations: {
 		setLevel(state, value){
-			if(state.currentLevel === value){
-				state.reloadSameLevel++
-			} else {
-				state.currentLevel = value	
-			}
+			state.reloadTiles++
+			state.currentLevel = value
 			state.activeTiles = []
+			state.numPlays = 0
 		},
 		play(state, value){
 			state.activeTiles.push(value)
@@ -29,6 +27,9 @@ export default new Vuex.Store({
 		},
 		resetElements(state){
 			state.activeTiles = []
+		},
+		checkMatch(state){
+			if(state.activeTiles.length === 2) state.checkMatch++
 		}
 	}
 	
