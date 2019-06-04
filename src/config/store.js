@@ -11,7 +11,8 @@ export default new Vuex.Store({
 		reloadTiles: 0,
 		numPlays: 0,
 		activeTiles: [],
-		checkMatch: 0
+		checkMatch: 0,
+		resetBoard: 0
 	},
 
 	mutations: {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
 		},
 		checkMatch(state){
 			if(state.activeTiles.length === 2) state.checkMatch++
+		},
+		resetBoard(state){
+			state.resetBoard++
 		}
 	}
 	

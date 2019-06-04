@@ -32,6 +32,7 @@ export default {
 
 		changeLvl(event) {
 			this.$store.commit('setLevel', event.target.value)
+			this.$store.commit('resetBoard')
 		}
 
 	}

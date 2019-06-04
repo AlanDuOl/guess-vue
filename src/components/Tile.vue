@@ -1,5 +1,6 @@
 <template>
     <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0);'">
+	{{state.active}}
 	</div>
 </template>
 
@@ -11,7 +12,10 @@ export default {
 	
 	props: {
 		bgColor: String,
-		level: String
+		level: String,
+		checkMatch: Number,
+		update: Number,
+		disable: Number
 	},
 	
 	data(){
@@ -26,37 +30,53 @@ export default {
 	computed: {
 		resetLevels(){
 			return this.$store.state.reloadTiles
+		},
+		resetBoard(){
+			return this.$store.state.resetBoard
 		}
 	},
 
 	watch: {
 		resetLevels(){
-			//Reset same level after first play (numPlays bigger than zero
-			this.setInactive()
+			//Reset same level after first play (numPlays bigger than zero)
+			if(this.state.canChange) this.setInactive()
 			this.$store.commit('resetElements')
 		},
-		checkMatch(){
-			if(this.$store.state.activeTiles[0] === this.$store.state.activeTiles[1]){
-				if(this.state.active) this.state.canChange = false
-			}
+		update(){
+			setTimeout(() => {
+				if(this.state.canChange) this.state.active = false
+			}, 500)
+		},
+		disable(){
+			if(this.state.active) this.state.canChange = false
+		},
+		resetBoard(){
+			this.state.active = false
+			this.state.canChange = true
 		}
 	},
 
 	methods: {
 		setActive(event){
-			if(this.$store.state.activeTiles.length < 2){
-				//If tile is already active do nothing
-				if(this.state.active){
-					return
+			if(this.state.canChange){
+				if(this.$store.state.activeTiles.length < 2){
+					//If tile is already active do nothing
+					if(this.state.active){
+						return
+					}
+					//If tile can be changed set it to active and add it to activeTiles
+					else {
+						this.state.active = true
+						this.$store.commit('play', this.bgColor)
+						this.$store.commit('checkMatch')
+					}
 				}
-				//If tile can be changed set it to active and add it to activeTiles
+				else if(this.$store.state.activeTiles.length === 2){
+					this.$store.commit('resetElements')
+				}
 				else {
-					this.state.active = true
-					this.$store.commit('play', event.target.outerHTML)
+					throw 'Unkonw length for activeTiles'
 				}
-			}
-			else {
-				throw 'Unkonw length for activeTiles'
 			}
 		},
 		setInactive(){
@@ -65,7 +85,7 @@ export default {
 	},
 
 	mounted(){
-		this.setInactive()
+		if(this.state.canChange) this.setInactive()
 	}
 	
 }

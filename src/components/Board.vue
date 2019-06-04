@@ -1,6 +1,6 @@
 <template>
     <div :id="grid[currentLvl]">
-        <tile :checkMatch="checkMatch" :level="currentLvl" v-for="(value, index) in finalImages" :id="'tile-'+index" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
+        <tile :disable="disableTile" :update="update" :level="currentLvl" v-for="(value, index) in finalImages" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
         </tile>
     </div>
 </template>
@@ -24,7 +24,9 @@ export default {
 				'16': 'board-container-2',
 				'20': 'board-container-3'
             },
-            levels
+            levels,
+			disableTile: 0,
+			update: 0
 		}
     },
 
@@ -39,6 +41,16 @@ export default {
 			return this.$store.state.checkMatch
 		}
     },
+	
+	watch: {
+		checkMatch(){
+			if(this.$store.state.activeTiles[0] === this.$store.state.activeTiles[1]){
+				this.disableTile++
+			} else {
+				this.update++
+			}
+		}
+	},
     
     methods: {
 
