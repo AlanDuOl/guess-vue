@@ -1,6 +1,5 @@
 <template>
     <div class="board-tiles" @click="setActive" :style="state.active ? 'background-color: rgb('+bgColor+')': 'background-color: rgb(0,0,0);'">
-	{{state.active}}
 	</div>
 </template>
 
@@ -12,8 +11,6 @@ export default {
 	
 	props: {
 		bgColor: String,
-		level: String,
-		checkMatch: Number,
 		update: Number,
 		disable: Number
 	},
@@ -45,7 +42,7 @@ export default {
 		update(){
 			setTimeout(() => {
 				if(this.state.canChange) this.state.active = false
-			}, 500)
+			}, 200)
 		},
 		disable(){
 			if(this.state.active) this.state.canChange = false
@@ -57,8 +54,11 @@ export default {
 	},
 
 	methods: {
-		setActive(event){
+		setActive(){
 			if(this.state.canChange){
+				if(this.$store.state.activeTiles.length === 2){
+					this.$store.commit('resetElements')
+				}
 				if(this.$store.state.activeTiles.length < 2){
 					//If tile is already active do nothing
 					if(this.state.active){
@@ -70,9 +70,6 @@ export default {
 						this.$store.commit('play', this.bgColor)
 						this.$store.commit('checkMatch')
 					}
-				}
-				else if(this.$store.state.activeTiles.length === 2){
-					this.$store.commit('resetElements')
 				}
 				else {
 					throw 'Unkonw length for activeTiles'

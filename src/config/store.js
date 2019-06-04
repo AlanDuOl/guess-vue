@@ -12,13 +12,14 @@ export default new Vuex.Store({
 		numPlays: 0,
 		activeTiles: [],
 		checkMatch: 0,
-		resetBoard: 0
+		resetBoard: 0,
+		matchs: []
 	},
 
 	mutations: {
 		setLevel(state, value){
-			state.reloadTiles++
 			state.currentLevel = value
+			state.reloadTiles++
 			state.activeTiles = []
 			state.numPlays = 0
 		},
@@ -34,6 +35,12 @@ export default new Vuex.Store({
 		},
 		resetBoard(state){
 			state.resetBoard++
+		},
+		addMatch(state, value){
+			state.matchs.push(value)
+		},
+		resetMatch(state){
+			state.matchs = []
 		}
 	}
 	

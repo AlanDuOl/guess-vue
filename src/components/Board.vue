@@ -1,6 +1,6 @@
 <template>
     <div :id="grid[currentLvl]">
-        <tile :disable="disableTile" :update="update" :level="currentLvl" v-for="(value, index) in finalImages" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
+        <tile :disable="disableTile" :update="update" v-for="(value, index) in finalImages" :key="index" :bgColor="value.red+',' + value.green+ ',' + value.blue">
         </tile>
     </div>
 </template>
@@ -39,6 +39,9 @@ export default {
         },
 		checkMatch(){
 			return this.$store.state.checkMatch
+		},
+		numPlays(){
+			return this.$store.state.numPlays
 		}
     },
 	
@@ -46,6 +49,9 @@ export default {
 		checkMatch(){
 			if(this.$store.state.activeTiles[0] === this.$store.state.activeTiles[1]){
 				this.disableTile++
+				this.$store.commit('addMatch', this.$store.state.activeTiles[0])
+				this.$store.commit('addMatch', this.$store.state.activeTiles[1])
+				this.isGameOver(this.$store.state.matchs.length)
 			} else {
 				this.update++
 			}
@@ -103,6 +109,12 @@ export default {
 				}
 			}
 			return finalImages
+		},
+		
+		isGameOver(matchs){
+			if(matchs === Number(this.currentLvl)){
+				alert(`Voce venceu!\nJogadas: ${this.numPlays}`)
+			}
 		}
     }
 }
