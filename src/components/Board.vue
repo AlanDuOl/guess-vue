@@ -122,11 +122,11 @@ export default {
 
 <style>
 
-    #board-container-1 {
+	#board-container-1 {
         display: grid;
 		grid: repeat(3, 1fr) / repeat(4, 1fr);
-		grid-gap: 1rem;
 		align-items: center;
+		justify-items: center;
         width: 500px;
         height: 500px;
         border: 1px solid black;
@@ -137,8 +137,8 @@ export default {
 	#board-container-2 {
         display: grid;
 		grid: repeat(4, 1fr) / repeat(4, 1fr);
-		grid-gap: 1rem;
 		align-items: center;
+		justify-items: center;
         width: 500px;
         height: 500px;
         border: 1px solid black;
@@ -149,13 +149,51 @@ export default {
 	#board-container-3 {
         display: grid;
 		grid: repeat(4, 1fr) / repeat(5, 1fr);
-		grid-gap: 1rem;
 		align-items: center;
+		justify-items: center;
         width: 500px;
         height: 500px;
         border: 1px solid black;
         margin: auto;
 		padding: 16px;
     }
+
+@media screen and (min-width: 551px) and (max-width: 899px) {
+
+	#board-container-1 {
+		width: 80%;
+        max-height: 500px;
+	}
+
+	#board-container-2 {
+		width: 80%;
+        max-height: 500px;
+	}
+
+	#board-container-3 {
+		width: 80%;
+        max-height: 500px;
+	}
+	
+}
+
+@media screen and (max-width: 550px) {
+	
+	#board-container-1 {
+		width: 90%;
+        max-height: 400px;
+	}
+
+	#board-container-2 {
+		width: 90%;
+        max-height: 400px;
+	}
+
+	#board-container-3 {
+		width: 90%;
+        max-height: 400px;
+	}
+
+}
 
 </style>

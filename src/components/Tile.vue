@@ -90,13 +90,29 @@ export default {
 
 <style>
 
-    .board-tiles {
-        min-width: 80px;
-        min-height: 80px;
-    }
-	
 	.board-tiles:hover {
 		box-shadow: 4px 4px gray;
 	}
+
+	@media screen and (min-width: 900px) {
+		.board-tiles {
+			min-width: 80px;
+			min-height: 80px;
+		}
+	}
+
+	@media screen and (min-width: 551px) and (max-width: 899px) {
+		.board-tiles {
+			min-width: 80px;
+			min-height: 80px;
+		}
+	}
+
+	@media screen and (max-width: 550px) {
+		.board-tiles {
+			width: 50px;
+			height: 50px;
+		}
+	}  
 
 </style>
